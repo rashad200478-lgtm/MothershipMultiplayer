@@ -749,6 +749,9 @@ class GameScene extends Phaser.Scene {
     handleNetworkEvent(eventName, data) {
         if (eventName === 'unitDeploy') {
             this.createRemoteUnit(data);
+        } else if (eventName === 'unitDeath') {
+            let unit = this.findUnitById(data.unitId);
+            if (unit && !unit._dying && !unit.isWarpingOut) unit.die('unknown');
         } else if (eventName === 'cmdHold') {
             let unit = this.findUnitById(data.unitId);
             if (unit && unit.hold) unit.hold();
@@ -1659,8 +1662,8 @@ class GameScene extends Phaser.Scene {
             }
         }
 
-        // Network: send state to opponent
-        if (this.network && this.network.connected && this.game.loop.frame % 3 === 0) {
+        // Network: send state to opponent (throttled ~5Hz)
+        if (this.network && this.network.connected && this.game.loop.frame % 12 === 0) {
             this.network.sendState();
         }
 

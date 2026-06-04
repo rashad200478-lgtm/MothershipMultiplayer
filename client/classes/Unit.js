@@ -123,6 +123,11 @@ class Unit extends Phaser.Physics.Arcade.Sprite {
     die(shooterUnitType) {
         if (this._dying) return;
         this._dying = true;
+        // Notify opponent in multiplayer
+        let scene = this.scene;
+        if (scene.network && scene.network.connected && scene.network.isLocallyControlled(this)) {
+            scene.network.sendGameEvent('unitDeath', { unitId: this._unitId });
+        }
         this.isWarpingOut = true;
         this.isEngaging = false;
         this.engagedEnemy = null;
@@ -141,7 +146,6 @@ class Unit extends Phaser.Physics.Arcade.Sprite {
             if (trench) trench._occCount = Math.max(0, (trench._occCount || 0) - 1);
         }
 
-        let scene = this.scene;
         let isTank = this.unitType === 'st' || this.unitType === 'ht';
         let shooterIsTank = shooterUnitType === 'st' || shooterUnitType === 'ht';
         if (this.unitType === 'mn') {

@@ -171,11 +171,20 @@ class NetworkManager {
             }
         });
 
-        // Destroy opponent units not in received state
+        // Graceful cleanup: track missing count per unit, only kill after 5 consecutive misses
+        if (!scene._missingCounts) scene._missingCounts = {};
         if (oppGroup) {
             oppGroup.getChildren().forEach(u => {
-                if (u._unitId > 0 && receivedIds.indexOf(u._unitId) === -1 && !u._dying && !u.isWarpingOut) {
-                    u.die('unknown');
+                if (u._unitId > 0 && !u._dying && !u.isWarpingOut) {
+                    if (receivedIds.indexOf(u._unitId) === -1) {
+                        scene._missingCounts[u._unitId] = (scene._missingCounts[u._unitId] || 0) + 1;
+                        if (scene._missingCounts[u._unitId] >= 5) {
+                            u.die('unknown');
+                            delete scene._missingCounts[u._unitId];
+                        }
+                    } else {
+                        if (scene._missingCounts[u._unitId]) delete scene._missingCounts[u._unitId];
+                    }
                 }
             });
         }
@@ -222,13 +231,23 @@ class NetworkManager {
 
         // --- Sync mines ---
         if (state.mines) {
-            // Remove local mines not in state
+            // Remove local mines not in state (with grace counting)
+            if (!scene._mineMissingCounts) scene._mineMissingCounts = {};
+            let mineKeys = {};
+            state.mines.forEach(sm => { mineKeys[sm.x + ',' + sm.y] = true; });
             for (let mi = scene.mines.length - 1; mi >= 0; mi--) {
                 let lm = scene.mines[mi];
-                let found = state.mines.some(sm => Math.abs(sm.x - lm.x) < 20 && Math.abs(sm.y - lm.y) < 20 && sm._mineIsRed === lm._mineIsRed);
+                let key = lm.x + ',' + lm.y;
+                let found = mineKeys[key];
                 if (!found) {
-                    lm.destroy();
-                    scene.mines.splice(mi, 1);
+                    scene._mineMissingCounts[key] = (scene._mineMissingCounts[key] || 0) + 1;
+                    if (scene._mineMissingCounts[key] >= 5) {
+                        lm.destroy();
+                        scene.mines.splice(mi, 1);
+                        delete scene._mineMissingCounts[key];
+                    }
+                } else {
+                    if (scene._mineMissingCounts[key]) delete scene._mineMissingCounts[key];
                 }
             }
             // Add new mines
