@@ -1,0 +1,39 @@
+The goal of the game is to destroy the enemy mothership by changing the force balance. You must 
+--- RECORDSEPARATOR ---
+not let the enemy units to get to your ship, instead you have to get your units to the enemy ship. 
+--- RECORDSEPARATOR ---
+You win when the balance bar becomes filled.
+--- RECORDSEPARATOR ---
+Change the current hatch/road by pressing 
+--- RECORDSEPARATOR ---
+UP/DOWN
+--- RECORDSEPARATOR ---
+ on the keyboard. Select current unit by 
+--- RECORDSEPARATOR ---
+pressing 
+--- RECORDSEPARATOR ---
+LEFT/RIGHT
+--- RECORDSEPARATOR ---
+ (if you have equipped with more than one unit). Press 
+--- RECORDSEPARATOR ---
+SPACE 
+--- RECORDSEPARATOR ---
+or 
+--- RECORDSEPARATOR ---
+CONTROL
+--- RECORDSEPARATOR ---
+ in 
+--- RECORDSEPARATOR ---
+order to send the unit. 
+--- RECORDSEPARATOR ---
+Alternatively, you may use the mouse and click on the unit buttons directly.
+--- RECORDSEPARATOR ---
+Every minute the Storm Attack is prepared and 5 units of a selected type go from all the hatches. 
+--- RECORDSEPARATOR ---
+If neither side wins during 3 minutes the Final Attack starts and units of all available types go 
+--- RECORDSEPARATOR ---
+from all the hatches. The party which is ahead after the Final Attack wins.
+--- RECORDSEPARATOR ---
+Different unit types have different advantages against different units. You may read the unit 
+--- RECORDSEPARATOR ---
+description in the game shop or just gain an experience.
