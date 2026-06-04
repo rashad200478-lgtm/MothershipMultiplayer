@@ -212,16 +212,19 @@ class DeckScene extends Phaser.Scene {
 
         // Fill deck with all 7 by default
         unitKeys.forEach(k => deck.push(k));
-        updateDeckUI();
 
         // --- Ready Button ---
-        let readyBtn = this.add.rectangle(cx, cy + 170, 240, 50, btnColor, 0.9)
-            .setStrokeStyle(2, accentColor).setDepth(3).setInteractive({ useHandCursor: true });
-        let readyText = this.add.text(cx, cy + 170, '7/7 Selected', {
-            fontSize: '20px', color: '#ffffff', fontFamily: 'Impact'
+        let readyBtn = this.add.rectangle(cx, cy + 170, 260, 55, btnColor, 0.95)
+            .setStrokeStyle(3, accentColor).setDepth(3).setInteractive({ useHandCursor: true });
+        let readyText = this.add.text(cx, cy + 165, 'READY', {
+            fontSize: '24px', color: '#ffffff', fontFamily: 'Impact',
+            shadow: { offsetX: 0, offsetY: 0, color: accentStr, blur: 12, stroke: true, fill: true }
         }).setOrigin(0.5).setDepth(4);
-        readyBtn.on('pointerover', () => { if (deck.length >= 7) readyBtn.setFillStyle(btnHover, 0.9); });
-        readyBtn.on('pointerout', () => readyBtn.setFillStyle(deck.length >= 7 ? btnColor : 0x333333, deck.length >= 7 ? 0.9 : 0.6));
+        let readySub = this.add.text(cx, cy + 188, 'Click to start the game', {
+            fontSize: '11px', color: '#aaaaaa', fontFamily: 'Arial'
+        }).setOrigin(0.5).setDepth(4);
+        readyBtn.on('pointerover', () => { if (deck.length >= 7) readyBtn.setFillStyle(btnHover, 0.95); });
+        readyBtn.on('pointerout', () => readyBtn.setFillStyle(deck.length >= 7 ? btnColor : 0x333333, deck.length >= 7 ? 0.95 : 0.6));
         readyBtn.on('pointerdown', () => {
             if (deck.length < 7) return;
             this.registry.set('playerDeck', deck);

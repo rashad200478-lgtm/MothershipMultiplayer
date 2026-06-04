@@ -450,7 +450,9 @@ class GameScene extends Phaser.Scene {
 
         // Multiplayer: send deploy event to opponent
         if (this.network && this.network.connected) {
-            let isLocallyControlled = isEnemyDoor ? (gameMode === 'multiplayer' && !isRed) : (gameMode !== 'multiplayer' || isRed === false);
+            let playerSide = this.registry.get('playerSide') || 'blue';
+            let isLocalBlue = playerSide === 'blue';
+            let isLocallyControlled = isLocalBlue ? !isRed : isRed;
             if (isLocallyControlled) {
                 this.network.sendGameEvent('unitDeploy', {
                     unitId: unitId, unitType: unitType, isRed: isRed,
