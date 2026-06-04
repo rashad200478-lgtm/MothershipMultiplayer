@@ -150,9 +150,10 @@ class NetworkManager {
                     : `tank_walk_${du.isRed ? 'red_' : ''}1`;
                 let lane = scene.lanes[du.laneIndex];
                 let targetY = du.isRed ? lane.enemyY : lane.playerY;
+                let spawnY = du.isRed ? lane.playerY : lane.enemyY;
                 let isTank = du.unitType === 'st' || du.unitType === 'ht';
                 let flipLikeTank = isTank || du.unitType === 'mn';
-                let soldier = new Unit(scene, du.x, du.y, texKey, {
+                let soldier = new Unit(scene, du.spawnX, spawnY, texKey, {
                     unitType: du.unitType, isRed: du.isRed,
                     laneIndex: du.laneIndex, unitId: du.unitId,
                     warpX: du.warpX, targetX: du.targetX, spawnX: du.spawnX

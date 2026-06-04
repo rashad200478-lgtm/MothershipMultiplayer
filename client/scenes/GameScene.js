@@ -789,12 +789,7 @@ class GameScene extends Phaser.Scene {
     createRemoteUnit(data) {
         // Guard against double-creation (if state sync already created this unit)
         let existing = this.findUnitById(data.unitId);
-        if (existing) {
-            existing.x = data.x;
-            existing.y = data.y;
-            existing.health = UNIT_STATS[data.unitType].hp;
-            return;
-        }
+        if (existing) return;
         let group = data.isRed ? this.eUnits : this.pUnits;
         let soldier = new Unit(this, data.x, data.y, data.texKey, {
             unitType: data.unitType, isRed: data.isRed, laneIndex: data.laneIndex,
