@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 const CLIENT_DIR = path.resolve(__dirname, '..', 'client');
 
 app.use(express.static(CLIENT_DIR));
-app.get('*', (req, res) => {
+app.use((req, res) => {
     res.sendFile(path.join(CLIENT_DIR, 'index.html'));
 });
 
